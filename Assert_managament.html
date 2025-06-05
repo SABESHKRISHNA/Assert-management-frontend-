@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Management System - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-card h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+        }
+
+        .role-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 25px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .role-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: rgba(255, 255, 255, 0.8);
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .tab-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+            text-align: left;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+            width: auto;
+        }
+
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .asset-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .asset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .asset-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active { background: #d1f2eb; color: #00875a; }
+        .status-maintenance { background: #fff3cd; color: #856404; }
+        .status-retired { background: #f8d7da; color: #721c24; }
+        .status-requested { background: #e7f3ff; color: #0066cc; }
+
+        .search-bar {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .request-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .request-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .alert-success {
+            background: #d1f2eb;
+            color: #00875a;
+            border-left: 4px solid #00875a;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #856404;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="login-container">
+        <div class="login-card">
+            <h1>🏢 Asset Manager</h1>
+            
+            <div class="role-selector">
+                <button type="button" class="role-btn active" onclick="selectRole('admin')">Admin</button>
+                <button type="button" class="role-btn" onclick="selectRole('user')">User</button>
+            </div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" required placeholder="Enter your username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="btn">Login</button>
+            </form>
+            
+            <div style="margin-top: 20px; font-size: 14px; color: #666;">
+                <p><strong>Demo Credentials:</strong></p>
+                <p>Admin: admin / admin123</p>
+                <p>User: user / user123</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="container hidden">
+        <div class="header">
+            <h1>🏢 Asset Management System</h1>
+            <div class="user-info">
+                <span class="user-badge" id="user-role-badge">Admin</span>
+                <span id="username-display">John Doe</span>
+                <button class="btn btn-small" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="nav-tabs" id="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('dashboard')">Dashboard</button>
+            <button class="tab-btn" id="add-asset-tab" onclick="showTab('add-asset')">Add Asset</button>
+            <button class="tab-btn" onclick="showTab('manage-assets')">Manage Assets</button>
+            <button class="tab-btn" id="requests-tab" onclick="showTab('requests')" style="display: none;">My Requests</button>
+            <button class="tab-btn" id="admin-requests-tab" onclick="showTab('admin-requests')" style="display: none;">Manage Requests</button>
+            <button class="tab-btn" onclick="showTab('reports')">Reports</button>
+        </div>
+
+        <div class="main-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h2>Dashboard Overview</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-assets">0</div>
+                        <div>Total Assets</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="active-assets">0</div>
+                        <div>Active Assets</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="maintenance-assets">0</div>
+                        <div>In Maintenance</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="total-value">$0</div>
+                        <div>Total Value</div>
+                    </div>
+                </div>
+                
+                <h3>Recent Assets</h3>
+                <div id="recent-assets" class="asset-grid"></div>
+            </div>
+
+            <!-- Add Asset Tab (Admin Only) -->
+            <div id="add-asset" class="tab-content">
+                <h2>Add New Asset</h2>
+                <form id="asset-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="asset-name">Asset Name *</label>
+                            <input type="text" id="asset-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="asset-id">Asset ID *</label>
+                            <input type="text" id="asset-id" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="category">Category *</label>
+                            <select id="category" required>
+                                <option value="">Select Category</option>
+                                <option value="IT Equipment">IT Equipment</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Vehicles">Vehicles</option>
+                                <option value="Machinery">Machinery</option>
+                                <option value="Office Supplies">Office Supplies</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status *</label>
+                            <select id="status" required>
+                                <option value="Active">Active</option>
+                                <option value="Maintenance">Maintenance</option>
+                                <option value="Retired">Retired</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="purchase-date">Purchase Date</label>
+                            <input type="date" id="purchase-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="purchase-cost">Purchase Cost ($)</label>
+                            <input type="number" id="purchase-cost" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="Building, Floor, Room">
+                        </div>
+                        <div class="form-group">
+                            <label for="assigned-to">Assigned To</label>
+                            <input type="text" id="assigned-to" placeholder="Employee Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="3" placeholder="Additional details about the asset"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn">Add Asset</button>
+                </form>
+            </div>
+
+
+            <div id="manage-assets" class="tab-content">
+                <h2>Manage Assets</h2>
+                
+
+                <div id="user-request-section" class="request-form hidden">
+                    <h3>Request Asset Assignment</h3>
+                    <form id="request-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="request-asset">Select Asset</label>
+                                <select id="request-asset" required>
+                                    <option value="">Choose an asset to request</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="request-reason">Reason for Request</label>
+                                <input type="text" id="request-reason" required placeholder="Why do you need this asset?">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">Submit Request</button>
+                    </form>
+                </div>
+
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search assets..." oninput="filterAssets()">
+                </div>
+                
+                <div class="form-group">
+                    <label for="filter-category">Filter by Category:</label>
+                    <select id="filter-category" onchange="filterAssets()">
+                        <option value="">All Categories</option>
+                        <option value="IT Equipment">IT Equipment</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Vehicles">Vehicles</option>
+                        <option value="Machinery">Machinery</option>
+                        <option value="Office Supplies">Office Supplies</option>
+                    </select>
+                </div>
+
+                <div id="assets-list" class="asset-grid"></div>
+            </div>
+
+            <div id="requests" class="tab-content">
+                <h2>My Requests</h2>
+                <div id="user-requests-list"></div>
+            </div>
+
+            <div id="admin-requests" class="tab-content">
+                <h2>Manage Asset Requests</h2>
+                <div id="admin-requests-list"></div>
+            </div>
+
+            <div id="reports" class="tab-content">
+                <h2>Reports & Analytics</h2>
+                <div class="form-row">
+                    <button class="btn" onclick="generateReport('summary')">Summary Report</button>
+                    <button class="btn btn-secondary" onclick="generateReport('depreciation')">Depreciation Report</button>
+                </div>
+                <div id="report-content" style="margin-top: 20px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Edit Asset</h2>
+            <form id="edit-form">
+                <input type="hidden" id="edit-index">
+                <div class="form-group">
+                    <label for="edit-name">Asset Name</label>
+                    <input type="text" id="edit-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-status">Status</label>
+                    <select id="edit-status">
+                        <option value="Active">Active</option>
+                        <option value="Maintenance">Maintenance</option>
+                        <option value="Retired">Retired</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-location">Location</label>
+                    <input type="text" id="edit-location">
+                </div>
+                <div class="form-group">
+                    <label for="edit-assigned">Assigned To</label>
+                    <input type="text" id="edit-assigned">
+                </div>
+                <button type="submit" class="btn">Update Asset</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const users = {
+            'admin': { password: 'admin123', role: 'admin', name: 'Admin User' },
+            'user': { password: 'user123', role: 'user', name: 'Regular User' }
+        };
+
+        let currentUser = null;
+        let selectedRole = 'admin';
+
+        let assets = [
+            {
+                id: 'COMP001',
+                name: 'Dell Laptop',
+                category: 'IT Equipment',
+                status: 'Active',
+                purchaseDate: '2023-01-15',
+                purchaseCost: 1200,
+                location: 'Building A, Floor 2, Room 201',
+                assignedTo: 'John Doe',
+                description: 'Development laptop for software team'
+            },
+            {
+                id: 'DESK001',
+                name: 'Office Desk',
+                category: 'Furniture',
+                status: 'Active',
+                purchaseDate: '2022-11-20',
+                purchaseCost: 350,
+                location: 'Building A, Floor 1, Room 105',
+                assignedTo: '',
+                description: 'Ergonomic office desk'
+            },
+            {
+                id: 'CHAIR001',
+                name: 'Office Chair',
+                category: 'Furniture',
+                status: 'Active',
+                purchaseDate: '2023-03-10',
+                purchaseCost: 200,
+                location: 'Building A, Floor 1, Room 105',
+                assignedTo: '',
+                description: 'Ergonomic office chair'
+            }
+        ];
+
+        let requests = [];
+        let currentEditIndex = -1;
+
+        function selectRole(role) {
+            selectedRole = role;
+            document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (users[username] && users[username].password === password) {
+                if (users[username].role === selectedRole) {
+                    currentUser = {
+                        username: username,
+                        role: users[username].role,
+                        name: users[username].name
+                    };
+                    
+                    showMainApp();
+                } else {
+                    alert(`Invalid role selection. This account is for ${users[username].role} only.`);
+                }
+            } else {
+                alert('Invalid username or password');
+            }
+        });
+
+        function showMainApp() {
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            
+            // Update UI based on user role
+            document.getElementById('username-display').textContent = currentUser.name;
+            document.getElementById('user-role-badge').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+            
+            if (currentUser.role === 'admin') {
+                setupAdminInterface();
+            } else {
+                setupUserInterface();
+            }
+            
+            updateDashboard();
+            updateRequestAssetDropdown();
+        }
+
+        // Setup Admin Interface
+        function setupAdminInterface() {
+            document.getElementById('add-asset-tab').style.display = 'block';
+            document.getElementById('admin-requests-tab').style.display = 'block';
+            document.getElementById('requests-tab').style.display = 'none';
+        }
+
+        // Setup User Interface
+        function setupUserInterface() {
+            document.getElementById('add-asset-tab').style.display = 'none';
+            document.getElementById('admin-requests-tab').style.display = 'none';
+            document.getElementById('requests-tab').style.display = 'block';
+            document.getElementById('user-request-section').classList.remove('hidden');
+        }
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            document.getElementById('main-app').classList.add('hidden');
+            document.getElementById('login-page').classList.remove('hidden');
+            document.getElementById('login-form').reset();
+            
+            // Reset tabs
+            showTab('dashboard');
+        }
+
+        // Tab Management
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            } else if (tabName === 'manage-assets') {
+                displayAssets();
+            } else if (tabName === 'requests') {
+                displayUserRequests();
+            } else if (tabName === 'admin-requests') {
+                displayAdminRequests();
+            }
+        }
+
+        // Asset Form Submission (Admin Only)
+        document.getElementById('asset-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (currentUser.role !== 'admin') {
+                alert('Access denied. Admin privileges required.');
+                return;
+            }
+            
+            const asset = {
+                id: document.getElementById('asset-id').value,
+                name: document.getElementById('asset-name').value,
+                category: document.getElementById('category').value,
+                status: document.getElementById('status').value,
+                purchaseDate: document.getElementById('purchase-date').value,
+                purchaseCost: parseFloat(document.getElementById('purchase-cost').value) || 0,
+                location: document.getElementById('location').value,
+                assignedTo: document.getElementById('assigned-to').value,
+                description: document.getElementById('description').value
+            };
+            
+            if (assets.some(a => a.id === asset.id)) {
+                alert('Asset ID already exists. Please use a unique ID.');
+                return;
+            }
+            
+            assets.push(asset);
+            this.reset();
+            alert('Asset added successfully!');
+            updateDashboard();
+            updateRequestAssetDropdown();
+        });
+
+        // Request Form Submission (User Only)
+        document.getElementById('request-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (currentUser.role !== 'user') {
+                alert('Access denied.');
+                return;
+            }
+            
+            const assetId = document.getElementById('request-asset').value;
+            const reason = document.getElementById('request-reason').value;
+            
+            const asset = assets.find(a => a.id === assetId);
+            if (!asset) {
+                alert('Asset not found.');
+                return;
+            }
+            
+            const request = {
+                id: Date.now(),
+                assetId: assetId,
+                assetName: asset.name,
+                requestedBy: currentUser.username,
+                requestedByName: currentUser.name,
+                reason: reason,
+                status: 'Pending',
+                requestDate: new Date().toLocaleDateString()
+            };
+            
+            requests.push(request);
+            this.reset();
+            alert('Request submitted successfully!');
+        });
+
+        // Display Assets
+        function displayAssets(assetsToShow = assets) {
+            const container = document.getElementById('assets-list');
+            container.innerHTML = '';
+            
+            assetsToShow.forEach((asset, index) => {
+                const card = createAssetCard(asset, index);
+                container.appendChild(card);
+            });
+        }
+
+        // Create Asset Card
+        function createAssetCard(asset, index) {
+            const card = document.createElement('div');
+            card.className = 'asset-card';
+            
+            const statusClass = `status-${asset.status.toLowerCase()}`;
+            const isAdmin = currentUser.role === 'admin';
+            
+            card.innerHTML = `
+                <h3>${asset.name}</h3>
+                <p><strong>ID:</strong> ${asset.id}</p>
+                <p><strong>Category:</strong> ${asset.category}</p>
+                <p><strong>Status:</strong> <span class="asset-status ${statusClass}">${asset.status}</span></p>
+                <p><strong>Location:</strong> ${asset.location || 'Not specified'}</p>
+                <p><strong>Assigned To:</strong> ${asset.assignedTo || 'Unassigned'}</p>
+                <p><strong>Value:</strong> $${asset.purchaseCost || 0}</p>
+                ${isAdmin ? `
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-small" onclick="editAsset(${index})" style="margin-right: 10px;">Edit</button>
+                    <button class="btn btn-secondary btn-small" onclick="deleteAsset(${index})">Delete</button>
+                </div>
+                ` : ''}
+            `;
+            
+            return card;
+        }
+
+        // Filter Assets
+        function filterAssets() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const categoryFilter = document.getElementById('filter-category').value;
+            
+            let filtered = assets.filter(asset => {
+                const matchesSearch = asset.name.toLowerCase().includes(searchTerm) || 
+                                    asset.id.toLowerCase().includes(searchTerm) ||
+                                    asset.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = !categoryFilter || asset.category === categoryFilter;
+                
+                return matchesSearch && matchesCategory;
+            });
+            
+            displayAssets(filtered);
+        }
+
+        // Edit Asset (Admin Only)
+        function editAsset(index) {
+            if (currentUser.role !== 'admin') {
+                alert('Access denied. Admin privileges required.');
+                return;
+            }
+            
+            currentEditIndex = index;
+            const asset = assets[index];
+            
+            document.getElementById('edit-index').value = index;
+            document.getElementById('edit-name').value = asset.name;
+            document.getElementById('edit-status').value = asset.status;
+            document.getElementById('edit-location').value = asset.location;
+            document.getElementById('edit-assigned').value = asset.assignedTo;
+            
+            document.getElementById('edit-modal').style.display = 'block';
+        }
+
+        // Edit Form Submission
+        document.getElementById('edit-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (currentUser.role !== 'admin') {
+                alert('Access denied. Admin privileges required.');
+                return;
+            }
+            
+            const index = currentEditIndex;
+            assets[index].name = document.getElementById('edit-name').value;
+            assets[index].status = document.getElementById('edit-status').value;
+            assets[index].location = document.getElementById('edit-location').value;
+            assets[index].assignedTo = document.getElementById('edit-assigned').value;
+            
+            closeModal();
+            displayAssets();
+            updateDashboard();
+            updateRequestAssetDropdown();
+            alert('Asset updated successfully!');
+        });
+
+        // Delete Asset (Admin Only)
+        function deleteAsset(index) {
+            if (currentUser.role !== 'admin') {
+                alert('Access denied. Admin privileges required.');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to delete this asset?')) {
+                assets.splice(index, 1);
+                displayAssets();
+                updateDashboard();
+                updateRequestAssetDropdown();
+                alert('Asset deleted successfully!');
+            }
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('edit-modal').style.display = 'none';
+        }
+
+        // Update Dashboard
+        function updateDashboard() {
+            const totalAssets = assets.length;
+            const activeAssets = assets.filter(a => a.status === 'Active').length;
+            const maintenanceAssets = assets.filter(a => a.status === 'Maintenance').length;
+            const totalValue = assets.reduce((sum, asset) => sum + (asset.purchaseCost || 0), 0);
+            
+            document.getElementById('total-assets').textContent = totalAssets;
+            document.getElementById('active-assets').textContent = activeAssets;
+            document.getElementById('maintenance-assets').textContent = maintenanceAssets;
+            document.getElementById('total-value').textContent = `${totalValue.toLocaleString()}`;
+            
+            const recentAssets = assets.slice(-3);
+            const container = document.getElementById('recent-assets');
+            container.innerHTML = '';
+            
+            recentAssets.forEach((asset, index) => {
+                const card = createAssetCard(asset, assets.indexOf(asset));
+                container.appendChild(card);
+            });
+        }
+
+        function updateRequestAssetDropdown() {
+            const dropdown = document.getElementById('request-asset');
+            dropdown.innerHTML = '<option value="">Choose an asset to request</option>';
+            
+            const availableAssets = assets.filter(asset => !asset.assignedTo && asset.status === 'Active');
+            
+            availableAssets.forEach(asset => {
+                const option = document.createElement('option');
+                option.value = asset.id;
+                option.textContent = `${asset.name} (${asset.id}) - ${asset.category}`;
+                dropdown.appendChild(option);
+            });
+        }
+
+        function displayUserRequests() {
+            const container = document.getElementById('user-requests-list');
+            const userRequests = requests.filter(req => req.requestedBy === currentUser.username);
+            
+            if (userRequests.length === 0) {
+                container.innerHTML = '<p>You have no asset requests.</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            userRequests.forEach(request => {
+                const requestDiv = document.createElement('div');
+                requestDiv.className = 'request-item';
+                requestDiv.innerHTML = `
+                    <h4>${request.assetName}</h4>
+                    <p><strong>Asset ID:</strong> ${request.assetId}</p>
+                    <p><strong>Reason:</strong> ${request.reason}</p>
+                    <p><strong>Status:</strong> <span class="asset-status status-${request.status.toLowerCase()}">${request.status}</span></p>
+                    <p><strong>Request Date:</strong> ${request.requestDate}</p>
+                `;
+                container.appendChild(requestDiv);
+            });
+        }
+
+        function displayAdminRequests() {
+            const container = document.getElementById('admin-requests-list');
+            
+            if (requests.length === 0) {
+                container.innerHTML = '<p>No asset requests to review.</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            requests.forEach((request, index) => {
+                const requestDiv = document.createElement('div');
+                requestDiv.className = 'request-item';
+                requestDiv.innerHTML = `
+                    <h4>${request.assetName}</h4>
+                    <p><strong>Asset ID:</strong> ${request.assetId}</p>
+                    <p><strong>Requested by:</strong> ${request.requestedByName}</p>
+                    <p><strong>Reason:</strong> ${request.reason}</p>
+                    <p><strong>Status:</strong> <span class="asset-status status-${request.status.toLowerCase()}">${request.status}</span></p>
+                    <p><strong>Request Date:</strong> ${request.requestDate}</p>
+                    ${request.status === 'Pending' ? `
+                    <div class="request-actions">
+                        <button class="btn btn-small" onclick="approveRequest(${index})">Approve</button>
+                        <button class="btn btn-secondary btn-small" onclick="rejectRequest(${index})">Reject</button>
+                    </div>
+                    ` : ''}
+                `;
+                container.appendChild(requestDiv);
+            });
+        }
+
+        function approveRequest(index) {
+            if (currentUser.role !== 'admin') {
+                alert('Access denied. Admin privileges required.');
+                return;
+            }
+            
+            const request = requests[index];
+            const asset = assets.find(a => a.id === request.assetId);
+            
+            if (asset) {
+                asset.assignedTo = request.requestedByName;
+                request.status = 'Approved';
+                
+                updateRequestAssetDropdown();
+                displayAdminRequests();
+                alert('Request approved successfully!');
+            }
+        }
+
+        function rejectRequest(index) {
+            if (currentUser.role !== 'admin') {
+                alert('Access denied. Admin privileges required.');
+                return;
+            }
+            
+            requests[index].status = 'Rejected';
+            displayAdminRequests();
+            alert('Request rejected.');
+        }
+
+        function generateReport(type) {
+            const container = document.getElementById('report-content');
+            
+            if (type === 'summary') {
+                const categories = {};
+                assets.forEach(asset => {
+                    categories[asset.category] = (categories[asset.category] || 0) + 1;
+                });
+                
+                let html = '<div class="alert alert-success"><h3>Asset Summary by Category</h3>';
+                for (const [category, count] of Object.entries(categories)) {
+                    html += `<p><strong>${category}:</strong> ${count} assets</p>`;
+                }
+                
+                html += `<h4>Request Statistics</h4>`;
+                html += `<p><strong>Total Requests:</strong> ${requests.length}</p>`;
+                html += `<p><strong>Pending:</strong> ${requests.filter(r => r.status === 'Pending').length}</p>`;
+                html += `<p><strong>Approved:</strong> ${requests.filter(r => r.status === 'Approved').length}</p>`;
+                html += `<p><strong>Rejected:</strong> ${requests.filter(r => r.status === 'Rejected').length}</p>`;
+                html += '</div>';
+                
+                container.innerHTML = html;
+            } else if (type === 'depreciation') {
+                let html = '<div class="alert alert-warning"><h3>Asset Depreciation Report</h3>';
+                html += '<p>This report shows asset values and estimated depreciation over time.</p>';
+                
+                const currentYear = new Date().getFullYear();
+                assets.forEach(asset => {
+                    if (asset.purchaseDate && asset.purchaseCost) {
+                        const purchaseYear = new Date(asset.purchaseDate).getFullYear();
+                        const ageInYears = currentYear - purchaseYear;
+                        const depreciation = asset.purchaseCost * 0.1 * ageInYears; // 10% per year
+                        const currentValue = Math.max(0, asset.purchaseCost - depreciation);
+                        
+                        html += `
+                            <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                <strong>${asset.name}</strong><br>
+                                Original Value: ${asset.purchaseCost}<br>
+                                Current Value: ${currentValue.toFixed(2)}<br>
+                                Age: ${ageInYears} years
+                            </div>
+                        `;
+                    }
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+            }
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('edit-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('main-app').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
